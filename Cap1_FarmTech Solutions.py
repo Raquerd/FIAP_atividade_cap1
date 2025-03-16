@@ -38,7 +38,8 @@ def inserir_dados(): #<- Declarando uma nova função (bloco que executará um c
             print('\nA cultura escolhida foi o milho.\nA cultura de milho tem a característica de ser cultivada em uma area quadrada com fertilizante.\nA cada m² serão aplicados 100g de fertilizante.')
 
             # CALCULE A AREA PLANTADA 
-            m = int(input('DIGITE EM METROS O TAMANHO DE UM DOS LADOS DA ÁREA PARA CALCULAR EM M²: ')) #<-input de dados para calculo de area
+            m = float(input('DIGITE EM METROS O TAMANHO DE UM DOS LADOS DA AREA PARA CALCULAR A AREA EM M²: ')) #<-input de dados para calculo de area
+
             area = round(m ** 2, 2) #<- Calculo da area "quadrado"
 
             # CALCULE O MANEJO DE INSUMOS
@@ -52,7 +53,7 @@ def inserir_dados(): #<- Declarando uma nova função (bloco que executará um c
             print('\nA cultura escolhida foi o soja.\nA cultura de soja tem a característica de ser cultivada em uma área redonda com fertilizante.\nA cada m² serão pulverizados 500ml de defensivo de soja.')
 
             # CALCULE A AREA PLANTADA
-            r = int(input('DIGITE EM METROS O RAIO DA AREA: ')) #<-input de dados para calculo de area
+            r = float(input('DIGITE EM METROS O RAIO DA AREA: ')) #<-input de dados para calculo de area
             area = round(pi * r ** 2,2) #<- Calculo da area "quadrado"
 
             # CALCULE O MANEJO DE INSUMOS
