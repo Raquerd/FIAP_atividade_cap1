@@ -8,6 +8,11 @@ dados = {'CULTURA':[],
         'INSUMOS':[]}#<- "Tabela de dados" do tipo dict (dictionary) onde são definidas chaves com valores. Explicando de outra forma, é como se as chaves fossem colunas e os valores fossem os dados inseridos na coluna exemplo {cultura:MILHO}
 
 # MENU
+try:
+    with open(r'C:\Users\Davi\Documents\Projetos\FIAP\FASE 1\FIAP_atividade_cap1\vetor_farmtech_solutions.txt', 'x') as arquivo:
+        arquivo.write('')
+except FileExistsError:
+    print('O arquivo já existe.')
 
 #FUNÇÃO DESTINADA A EXIBIÇÃO DE DADOS
 def exibir_dados(dicionario): #<- Declarando uma função nova (bloco que executará um conjundo de códigos caso seja chamado em outros pontos da script) / defina exibir_dados(dicionario / dado_externo_necessário) / O nome dicionário é apenas "ficticio", pois qualquer variavel aque atenda as condições necessárias pode ser adicionado nesse espaço
@@ -66,7 +71,9 @@ def inserir_dados(): #<- Declarando uma nova função (bloco que executará um c
 
 while True: #<- Bloco de looping
 # LIMPEZA DO TERMINAL
-
+    with open(r'C:\Users\Davi\Documents\Projetos\FIAP\FASE 1\FIAP_atividade_cap1\vetor_farmtech_solutions.txt', 'a') as arquivo:
+        pass
+    
     # Apresentação do menu
     print(' '*8,'MENU',' '*8,'\n','-'*22,'\n 1 - Inserir dados\n 2 - Exibir dados\n 3 - Atualizar dados\n 4 - Deletar dados\n 5 - Sair\n','-'*22)#<- Impressão do Menu / a expressão "\n" pula uma linha no print)
 
@@ -96,8 +103,7 @@ while True: #<- Bloco de looping
                     os.system('cls') #<- Realiza limpeza do terminal
 
                     resp_menu_1 = int(input('\nDESEJA INSERIR DADOS\n1-SIM\n2-NAO\nR: ')) #<- Input da variavel de referencia do looping para determinar se haverá continuidade da execução
-
-        
+                     
             # EXIBIÇÃO DE DADOS
             elif menu_select == 2: #<- Bloco condicional (se a variavel menu_select for igual a 2, então execute o bloco abaixo)
                 os.system('cls') #<- Realiza limpeza do terminal
@@ -171,7 +177,10 @@ while True: #<- Bloco de looping
             # # EXIT
             elif menu_select == 5: #<- Bloco condicional (se a variavel menu_select for igual a 5, então execute o bloco abaixo)
                 exit() #<- Termina a execução
-            
+        with open(r'C:\Users\Davi\Documents\Projetos\FIAP\FASE 1\FIAP_atividade_cap1\vetor_farmtech_solutions.txt', 'w') as arquivo:
+            arquivo.write(f'CULTURA:{dados["CULTURA"]}\nAREA:{dados["AREA"]}\nINSUMOS:{dados["INSUMOS"]}')
+        print(f'''CULTURA:{dados["CULTURA"]}\nAREA:{dados["AREA"]}\nINSUMOS:{dados["INSUMOS"]}''')
+                
     except ValueError:#<- except faz parte do bloco "try". Aqui é onde indicamos a excessão (erro) que pode iniciar o codigo dentro desse bloco
         os.system('cls') #<- Realiza limpeza do terminal
         print('O valor escolhido pelo usuário não corresponde a um indice valido.')
