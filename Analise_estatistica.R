@@ -1,14 +1,18 @@
-install.packages(jsonlite)
-install.packages(glue)
-install.packages(dplyr)
-install.packages("httr")
-library(jsonlite)
-library(dplyr)
-library(glue)
+options(repos = c(CRAN = "https://cran.rstudio.com/"))
+for (lib in c("jsonlite", "glue", "dplyr", "httr")) {
+  if (!(lib %in% rownames(installed.packages()))){
+    install.packages(lib)
+  }
+}
+
+library("jsonlite")
+library("dplyr")
+library("glue")
 library("httr")
 
 #Input do caminho dos dados salvos
 path <- readline(prompt = "Insira o destino onde o arquivo foi salvo: ")
+path <- gsub("\\\\", "/", path)
 
 #Trazendo dados JSON para o formato DATA FRAME
 dados <- data.frame(fromJSON(path))
@@ -24,7 +28,7 @@ request <- httr::GET(API_ID)
 #print(content(request,"text"))
 
 database_weather <- fromJSON(content(request, "text"))
-print(database_weather)
+#print(database_weather)
 
 #Calculo de média de insumos
 media_insumos_milho <- mean((dados %>% filter(dados$CULTURA == "MILHO"))$INSUMOS)
