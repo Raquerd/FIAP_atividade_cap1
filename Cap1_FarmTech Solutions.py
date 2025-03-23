@@ -26,7 +26,7 @@ def exibir_dados(dicionario): #<- Declarando uma função nova (bloco que execut
         print(f"|{idx:<4} | {dicionario['CULTURA'][idx]:<5} | {dicionario['AREA'][idx]:<12} | {dicionario['INSUMOS'][idx]:<15} |") #<- Impressão de dados em formato de tabela
 
 #FUNÇÃO DESTINADA CALCULAR A CULTURA
-def inserir_dados(): #<- Declarando uma nova função (bloco que executará um conjundo de códigos caso seja chamado em outros pontos da script) / defina inserir_dados
+def inserir_dados(insert: bool = False): #<- Declarando uma nova função (bloco que executará um conjundo de códigos caso seja chamado em outros pontos da script) / defina inserir_dados
 
     # Declarando variaveis globais (variaveis definidas internamente que podem ser trazidas para fora da função)
     global area, insumo, manejo_insumo, cultura
@@ -55,7 +55,7 @@ def inserir_dados(): #<- Declarando uma nova função (bloco que executará um c
         elif cultura == 'SOJA': #<- Condição para inicio do bloco (se cultura for igual a SOJA)
 
             # Aviso
-            print('\nA cultura escolhida foi o soja.\nA cultura de soja tem a caracteristica de ser cultivada em uma area redonda com fertilizante.\nA cada m² serão pulverizados 500ml de defensivo de soja.')
+            print('\nA cultura escolhida foi o soja.\nA cultura de soja tem a caracteristica de ser cultivada em uma area redonda com defensivos de soja.\nA cada m² serão pulverizados 500ml de defensivo de soja.')
 
             # CALCULE A AREA PLANTADA
             r = int(input('DIGITE EM METROS O RAIO DA AREA: ')) #<-input de dados para calculo de area
@@ -64,11 +64,17 @@ def inserir_dados(): #<- Declarando uma nova função (bloco que executará um c
             # CALCULE O MANEJO DE INSUMOS
             insumo = 500 #<- Definindo quantidade de insumos baseado no tipo de cultura
             manejo_insumo = round(area * insumo,2) #<- Calculo de insumos
-
+        else:
+            raise(ValueError)
+        # ARMAZENE TUDO EM LISTAS
+        if insert == True:
+            dados['CULTURA'].append(cultura) #<- Inserção dos dados da variavel global "cultura" (definida na função "inserir_dados) na tabela
+            dados['AREA'].append(area) #<- Inserção dos dados da variavel global "area" (definida na função "inserir_dados) na tabela
+            dados['INSUMOS'].append(manejo_insumo) #<- Inserção dos dados da variavel global "manejo_insumo" (definida na função "inserir_dados) na tabela
     # Excessao
     except ValueError as error: #<- except faz parte do bloco "try". Aqui é onde indicamos a excessão (erro) que pode iniciar o codigo dentro desse bloco
-        print('Algo não ocorreu como deveria.\nTente novamente') #<- Comando que será executado caso a excessão seja verdadeira
-
+        print('Algum valor foi digitado incorretamente.\nTente novamente') #<- Comando que será executado caso a excessão seja verdadeira
+        sleep(3)
 
 while True: #<- Bloco de looping
 # LIMPEZA DO TERMINAL
@@ -94,12 +100,8 @@ while True: #<- Bloco de looping
                 resp_menu_1 = True #<- Variavel referencia para looping (variavel booleana)
                 
                 while resp_menu_1 == True: #<- Bloco de looping (enquanto resp_menu_1 for verdadeiro, o este bloco será executado)
-                    inserir_dados() #<- Chama a função "inserir_dados" que definimos anteriormente
-
-                    # ARMAZENE TUDO EM LISTAS
-                    dados['CULTURA'].append(cultura) #<- Inserção dos dados da variavel global "cultura" (definida na função "inserir_dados) na tabela
-                    dados['AREA'].append(area) #<- Inserção dos dados da variavel global "area" (definida na função "inserir_dados) na tabela
-                    dados['INSUMOS'].append(manejo_insumo) #<- Inserção dos dados da variavel global "manejo_insumo" (definida na função "inserir_dados) na tabela
+                    inserir_dados(True) #<- Chama a função "inserir_dados" que definimos anteriormente
+                    
                     os.system('cls') #<- Realiza limpeza do terminal
 
                     resp_menu_1 = int(input('\nDESEJA INSERIR DADOS\n1-SIM\n2-NAO\nR: ')) #<- Input da variavel de referencia do looping para determinar se haverá continuidade da execução
@@ -129,7 +131,7 @@ while True: #<- Bloco de looping
                     idx = int(input('\nEscolha os dados que deseja alterar: ')) #<- Input de dados para definir qual indice será alterado
 
                     # Condição para validação de index existente
-                    if idx > len(dados)-1 or idx < 0: #< Condicional que verifica se o indice indicado pelo usuário é do que o maior indice apresentado na tabela (len(dados) exibe a quantidade de linhas (indices) presentes na tabela) / ATENÇÃO: Essa não é uma boa forma de executar a proposta, pois pode gerar erros em casos onde o programa tenha que ser mais trabalhado, entretanto, para esse casso funcionará.
+                    if idx > len(dados)+1 or idx < 0: #< Condicional que verifica se o indice indicado pelo usuário é do que o maior indice apresentado na tabela (len(dados) exibe a quantidade de linhas (indices) presentes na tabela) / ATENÇÃO: Essa não é uma boa forma de executar a proposta, pois pode gerar erros em casos onde o programa tenha que ser mais trabalhado, entretanto, para esse casso funcionará.
                         os.system('cls') #<- Realiza limpeza do terminal
                         print('O valor escolhido pelo usuário não corresponde a um indice valido.') #<- Imprime um erro caso a condição proposta acima seja verdadeira
                         sleep(1) #<- o código fica parado por 1 segundo 
@@ -159,7 +161,7 @@ while True: #<- Bloco de looping
                     idx = int(input('\nEscolha os dados que deseja excluir da tabela: ')) #<- Input de dados para definir qual indice será alterado
 
                     # Condição para validação de index existente
-                    if idx > len(dados)-1 or idx < 0: #< Condicional que verifica se o indice indicado pelo usuário é do que o maior indice apresentado na tabela (len(dados) exibe a quantidade de linhas (indices) presentes na tabela) / ATENÇÃO: Essa não é uma boa forma de executar a proposta, pois pode gerar erros em casos onde o programa tenha que ser mais trabalhado, entretanto, para esse casso funcionará.
+                    if idx > len(dados)+1 or idx < 0: #< Condicional que verifica se o indice indicado pelo usuário é do que o maior indice apresentado na tabela (len(dados) exibe a quantidade de linhas (indices) presentes na tabela) / ATENÇÃO: Essa não é uma boa forma de executar a proposta, pois pode gerar erros em casos onde o programa tenha que ser mais trabalhado, entretanto, para esse casso funcionará.
                         os.system('cls') #<- Realiza limpeza do terminal
                         print('O valor escolhido pelo usuário não corresponde a um indice valido.') #<- Imprime um erro caso a condição proposta acima seja verdadeira
                         sleep(1) #<- o código fica parado por 1 segundo 
@@ -171,13 +173,13 @@ while True: #<- Bloco de looping
                         dados['INSUMOS'].pop(idx) #<- Utiliza o "pop" para deletar os dados com base na variavel "idx" para acessar um indice da tabela "dados"
 
                     # Atualização variavel de loop (utilizado para determinar se devemos continuar)
-                    resp_menu_4 = int(input('Desja atualizar mais algum dado da tabela?\n1-SIM\n2-NAO\nR: ')) #<- Input da variavel de referencia do looping para determinar se haverá continuidade da execução
-
+                    resp_menu_4 = int(input('Desja deletar mais algum dado da tabela?\n1-SIM\n2-NAO\nR: ')) #<- Input da variavel de referencia do looping para determinar se haverá continuidade da execução
+                    
                 os.system('cls') #<- Realiza limpeza do terminal
             elif menu_select == 5:
                 os.system('cls')
                 path = input('INSIRA O CAMINHO ONDE OS DADOS QUE DESEJA CARREGAR ESTÃO SALVOS:\n') #<- Input do caminho onde o arquivo foi salvo
-                with open(rf'{path}\vetor_farmtech_solutions.json', 'r') as arquivo: #<- Cria uma variavel com o nome "arquvio" e salva e cria um bloco de atividades relacionadas a variavel
+                with open(rf'{path}', 'r') as arquivo: #<- Cria uma variavel com o nome "arquvio" e salva e cria um bloco de atividades relacionadas a variavel
                     dados = json.load(arquivo) #<- Carrega arquivo JSON
                 os.system('cls')
 
